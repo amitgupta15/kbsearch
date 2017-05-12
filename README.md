@@ -19,3 +19,6 @@ Remove the irrelevant words from the list of tokens
 
 **Output:** ["pay","bill","online"]
 
+### 3. Search All Topics
+Search a list of all topics to locate keywords. If keyword is found, add the topic to search result.
+

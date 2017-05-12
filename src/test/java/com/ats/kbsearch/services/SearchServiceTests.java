@@ -23,24 +23,6 @@ public class SearchServiceTests {
     @Autowired
     SearchService searchService;
 
-    @Test
-    public void tokenizeSearchPhraseTest() {
-        String searchPhrase = "How do I pay my bill online online?";
-        Set<String> expectedTokens = new HashSet<>(Arrays.asList("bill","how","pay","do","my","i","online"));
-        Set<String> tokens = searchService.tokenizeString(searchPhrase);
-
-        assertThat(tokens).isEqualTo(expectedTokens);
-
-    }
-
-    @Test
-    public void removeIgnoreWordsTest() {
-        Set<String> input = new HashSet<>(Arrays.asList("bill","how","pay","do","my","i","online"));
-        Set<String> expectedTokens = new HashSet<>(Arrays.asList("bill","pay","online"));
-        Set<String> tokens = searchService.removeIgnoreWords(input);
-
-        assertThat(tokens).isEqualTo(expectedTokens);
-    }
 
     @Test
     public void searchTest() {
