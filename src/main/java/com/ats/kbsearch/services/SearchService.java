@@ -3,6 +3,7 @@ package com.ats.kbsearch.services;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by amit on 5/10/17.
@@ -24,5 +25,17 @@ public class SearchService {
     public Set<String> removeIgnoreWords(Set<String> tokens) {
         Set<String> relevantTokens = RemoveIgnoreWords.execute(tokens);
         return relevantTokens;
+    }
+
+    public Set<String> search(String searchPhrase, Set<String> allTopics) {
+
+        Set<String> tokens = tokenizeString(searchPhrase);
+        tokens = removeIgnoreWords(tokens);
+
+        Set<String> searchResult = new HashSet<>();
+        for(String token: tokens) {
+            searchResult.addAll(allTopics.stream().filter(topic -> topic.indexOf(token) >= 0).collect(Collectors.toSet()));
+        }
+        return searchResult;
     }
 }

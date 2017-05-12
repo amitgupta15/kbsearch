@@ -40,4 +40,15 @@ public class SearchServiceTests {
 
         assertThat(tokens).isEqualTo(expectedTokens);
     }
+
+    @Test
+    public void searchTest() {
+        String input = "How do I pay my bill online?";
+        Set<String> allTopics = new HashSet<>(Arrays.asList("Can I pay my bill online?","How can I get help paying my bill?","How can I contact socalgas?"));
+        Set<String> expectedOutput = new HashSet<>(Arrays.asList("Can I pay my bill online?","How can I get help paying my bill?"));
+
+        Set<String> searchResult = searchService.search(input, allTopics);
+
+        assertThat(searchResult).isEqualTo(expectedOutput);
+    }
 }
