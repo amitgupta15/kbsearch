@@ -11,6 +11,7 @@ public class KbsearchApplicationTests {
 
 	@Test
 	public void contextLoads() {
+
 	}
 
 }
