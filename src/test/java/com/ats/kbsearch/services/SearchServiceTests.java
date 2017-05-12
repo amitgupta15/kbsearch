@@ -3,6 +3,7 @@ package com.ats.kbsearch.services;
  * Created by amit on 5/10/17.
  */
 
+import com.ats.kbsearch.domains.Topic;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,10 +45,16 @@ public class SearchServiceTests {
     @Test
     public void searchTest() {
         String input = "How do I pay my bill online?";
-        Set<String> allTopics = new HashSet<>(Arrays.asList("Can I pay my bill online?","How can I get help paying my bill?","How can I contact socalgas?"));
-        Set<String> expectedOutput = new HashSet<>(Arrays.asList("Can I pay my bill online?","How can I get help paying my bill?"));
+        Set<Topic> allTopics = new HashSet<>(Arrays.asList(
+                new Topic("Can I pay my bill online?"),
+                new Topic("How can I get help paying my bill?"),
+                new Topic("How can I contact socalgas?")));
 
-        Set<String> searchResult = searchService.search(input, allTopics);
+        Set<Topic> expectedOutput = new HashSet<>(Arrays.asList(
+                new Topic("Can I pay my bill online?"),
+                new Topic("How can I get help paying my bill?")));
+
+        Set<Topic> searchResult = searchService.search(input, allTopics);
 
         assertThat(searchResult).isEqualTo(expectedOutput);
     }

@@ -1,5 +1,6 @@
 package com.ats.kbsearch.services;
 
+import com.ats.kbsearch.domains.Topic;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -27,14 +28,14 @@ public class SearchService {
         return relevantTokens;
     }
 
-    public Set<String> search(String searchPhrase, Set<String> allTopics) {
+    public Set<Topic> search(String searchPhrase, Set<Topic> allTopics) {
 
         Set<String> tokens = tokenizeString(searchPhrase);
         tokens = removeIgnoreWords(tokens);
 
-        Set<String> searchResult = new HashSet<>();
+        Set<Topic> searchResult = new HashSet<>();
         for(String token: tokens) {
-            searchResult.addAll(allTopics.stream().filter(topic -> topic.indexOf(token) >= 0).collect(Collectors.toSet()));
+            searchResult.addAll(allTopics.stream().filter(topic -> topic.getName().indexOf(token) >= 0).collect(Collectors.toSet()));
         }
         return searchResult;
     }
