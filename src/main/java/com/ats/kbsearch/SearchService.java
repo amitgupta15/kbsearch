@@ -2,8 +2,7 @@ package com.ats.kbsearch;
 
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by amit on 5/10/17.
@@ -11,7 +10,12 @@ import java.util.List;
 @Service
 public class SearchService {
 
-    public List<String> tokenizeSearchPhrase(String searchPhrase) {
-        return Arrays.asList("hello");
+    public Set<String> tokenizeString(String string) {
+        Set<String> tokens = new HashSet<String>();
+        StringTokenizer stringTokenizer = new StringTokenizer(string.toLowerCase().replaceAll("[\\p{P}\\p{S}]",""));
+        while(stringTokenizer.hasMoreTokens()) {
+            tokens.add(stringTokenizer.nextToken());
+        }
+        return tokens;
     }
 }

@@ -13,7 +13,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -25,8 +26,8 @@ public class SearchServiceTests {
     @Test
     public void tokenizeSearchPhraseTest() {
         String searchPhrase = "How do I pay my bill online?";
-        List<String> expectedTokens = Arrays.asList("how","do","i","pay","my","bill","online");
-        List<String> tokens = searchService.tokenizeSearchPhrase(searchPhrase);
+        Set<String> expectedTokens = new HashSet<>(Arrays.asList("bill","how","pay","do","my","i","online"));
+        Set<String> tokens = searchService.tokenizeString(searchPhrase);
         assertThat(tokens).isEqualTo(expectedTokens);
 
     }
