@@ -1,9 +1,11 @@
 package com.ats.kbsearch.services;
 
 import com.ats.kbsearch.data.Data;
+import com.ats.kbsearch.data.MockData;
 import com.ats.kbsearch.decorators.RemoveIgnoreWordsDecorator;
 import com.ats.kbsearch.decorators.SpellCheckDecorator;
 import com.ats.kbsearch.decorators.TokenDecorator;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,12 @@ public class TokenServiceTests {
     @Autowired
     TokenService tokenService;
 
+    private Data data;
+
+    @Before
+    public void setUp() {
+        data = new MockData();
+    }
     @Test
     public void tokenizeSearchPhraseTest() {
         String searchPhrase = "How do I pay my bill online online?";
@@ -44,10 +52,10 @@ public class TokenServiceTests {
         String searchPhrase = "How do do I pey my bull online online?";
         Set<String> expectedTokens = new HashSet<>(Arrays.asList("pay","pey","bull","bill","online"));
 
-        TokenDecorator removeIgnoreWordsDecorator = new RemoveIgnoreWordsDecorator(Data.getIgnoreWords());
-        TokenDecorator spellCheckDecorator = new SpellCheckDecorator(Data.getDictionary());
+        TokenDecorator removeIgnoreWordsDecorator = new RemoveIgnoreWordsDecorator(data);
+        TokenDecorator spellCheckDecorator = new SpellCheckDecorator(data);
 
-        Set<String> tokens = tokenService.extractTokensFromString(searchPhrase, new ArrayList<>(Arrays.asList(removeIgnoreWordsDecorator, spellCheckDecorator)));
+        Set<String> tokens = tokenService.extractAndDecorateTokensFromString(searchPhrase, new ArrayList<>(Arrays.asList(removeIgnoreWordsDecorator, spellCheckDecorator)));
 
         assertThat(tokens).isEqualTo(expectedTokens);
     }

@@ -1,6 +1,7 @@
 package com.ats.kbsearch.decorators;
 
 
+import com.ats.kbsearch.data.Data;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashSet;
@@ -14,13 +15,13 @@ public class SpellCheckDecorator extends TokenDecorator {
 
     public static final double JARO_WINKLER_THRESHOLD = 0.8;
 
-    public SpellCheckDecorator(Set<String> dataDictionary) {
-        super(dataDictionary);
+    public SpellCheckDecorator(Data data) {
+        super(data);
     }
 
     @Override
     public Set<String> updateTokens(Set<String> tokens) {
-        Set<String> dataDictionary = (Set<String>) super.getDataDictionary();
+        Set<String> dataDictionary = super.getData().getDictionary();
         Set<String> tokensNotInDictionary = tokens.stream().filter(token -> !dataDictionary.contains(token)).collect(Collectors.toSet());
         Set<String> checkedTokens = new HashSet<>();
 

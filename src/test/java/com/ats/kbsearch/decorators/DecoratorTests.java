@@ -1,6 +1,8 @@
 package com.ats.kbsearch.decorators;
 
 import com.ats.kbsearch.data.Data;
+import com.ats.kbsearch.data.MockData;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -14,12 +16,19 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class DecoratorTests {
 
+    private Data data;
+
+    @Before
+    public void setUp() {
+        data = new MockData();
+    }
+
     @Test
     public void removeIgnoreWordsTest() {
         Set<String> input = new HashSet<>(Arrays.asList("bill","how","pay","do","my","i","online"));
         Set<String> expectedTokens = new HashSet<>(Arrays.asList("bill","pay","online"));
 
-        TokenDecorator removeIgnoreWordsDecorator = new RemoveIgnoreWordsDecorator(Data.getIgnoreWords());
+        TokenDecorator removeIgnoreWordsDecorator = new RemoveIgnoreWordsDecorator(data);
 
         Set<String> tokens = removeIgnoreWordsDecorator.updateTokens(input);
 
@@ -31,7 +40,7 @@ public class DecoratorTests {
         Set<String> input = new HashSet<>(Arrays.asList("pey","bull","online"));
         Set<String> expectedTokens = new HashSet<>(Arrays.asList("pey","pay","bill","online", "bull"));
 
-        TokenDecorator spellCheckDecorator = new SpellCheckDecorator(Data.getDictionary());
+        TokenDecorator spellCheckDecorator = new SpellCheckDecorator(data);
 
         Set<String> tokens = spellCheckDecorator.updateTokens(input);
 
@@ -43,7 +52,7 @@ public class DecoratorTests {
         Set<String> input = new HashSet<>(Arrays.asList("contact","socalgas"));
         Set<String> expectedTokens = new HashSet<>(Arrays.asList("contact","socalgas","mail","phone","address","fax","facebook","twitter"));
 
-        TokenDecorator contextMapDecorator = new ContextMapDecorator(Data.getContextMap());
+        TokenDecorator contextMapDecorator = new ContextMapDecorator(data);
 
         Set<String> tokens = contextMapDecorator.updateTokens(input);
 

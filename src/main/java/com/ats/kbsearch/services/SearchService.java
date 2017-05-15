@@ -19,21 +19,24 @@ import java.util.stream.Collectors;
 public class SearchService {
 
     @Autowired
-    TokenService tokenService;
+    private TokenService tokenService;
 
-    public Set<Topic> search(String searchPhrase, Set<Topic> allTopics) {
 
-        List<TokenDecorator> tokenDecorators = new ArrayList<>(Arrays.asList(
-                new RemoveIgnoreWordsDecorator(Data.getIgnoreWords()),
-                new SpellCheckDecorator(Data.getDictionary()),
-                new ContextMapDecorator(Data.getContextMap())
-        ));
-        Set<String> tokens = tokenService.extractTokensFromString(searchPhrase, tokenDecorators);
+    private Data data;
+
+    public Set<Topic> search(String searchPhrase, List<TokenDecorator> tokenDecorators) {
+
+        Set<Topic> allTopics = data.getAllTopics();
+        Set<String> tokens = tokenService.extractAndDecorateTokensFromString(searchPhrase, tokenDecorators);
 
         Set<Topic> searchResult = new HashSet<>();
         for(String token: tokens) {
             searchResult.addAll(allTopics.stream().filter(topic -> topic.getName().indexOf(token) >= 0).collect(Collectors.toSet()));
         }
         return searchResult;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
     }
 }

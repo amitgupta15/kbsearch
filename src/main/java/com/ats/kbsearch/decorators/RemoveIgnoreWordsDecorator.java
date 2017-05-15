@@ -1,5 +1,7 @@
 package com.ats.kbsearch.decorators;
 
+import com.ats.kbsearch.data.Data;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -8,14 +10,15 @@ import java.util.stream.Collectors;
  */
 public class RemoveIgnoreWordsDecorator extends TokenDecorator {
 
-    public RemoveIgnoreWordsDecorator(Set<String> dataDictionary) {
-        super(dataDictionary);
+    public RemoveIgnoreWordsDecorator(Data data) {
+        super(data);
     }
 
     @Override
     public Set<String> updateTokens(Set<String> tokens) {
+        Set<String> dataDictionary = super.getData().getIgnoreWords();
 
-        Set<String> relevantTokens = tokens.stream().filter(token -> !super.getDataDictionary().contains(token)).collect(Collectors.toSet());
+        Set<String> relevantTokens = tokens.stream().filter(token -> !dataDictionary.contains(token)).collect(Collectors.toSet());
         return relevantTokens;
     }
 }

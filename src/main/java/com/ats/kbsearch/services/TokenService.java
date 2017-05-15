@@ -18,7 +18,7 @@ public class TokenService {
 
     private static final String REGEX_TO_REMOVE_PUNCTUATIONS = "[\\p{P}\\p{S}]";
 
-    public Set<String> extractTokensFromString(String string, List<TokenDecorator> tokenDecoratorList) {
+    public Set<String> extractAndDecorateTokensFromString(String string, List<TokenDecorator> tokenDecoratorList) {
         Set<String> tokens = tokenizeString(string);
         for (TokenDecorator tokenDecorator : tokenDecoratorList) {
             tokens = tokenDecorator.updateTokens(tokens);

@@ -1,6 +1,7 @@
 package com.ats.kbsearch.decorators;
 
-import java.util.HashSet;
+import com.ats.kbsearch.data.Data;
+
 import java.util.Set;
 
 /**
@@ -8,15 +9,15 @@ import java.util.Set;
  */
 public abstract class TokenDecorator {
 
-    private Set<?> dataDictionary = new HashSet<>();
+    private Data data;
 
-    public TokenDecorator(Set<?> dataDictionary) {
-        this.dataDictionary = dataDictionary;
+    public TokenDecorator(Data data) {
+        this.data = data;
     }
 
     public abstract Set<String> updateTokens(Set<String> tokens);
 
-    public Set<?> getDataDictionary() {
-        return dataDictionary;
+    public Data getData() {
+        return data;
     }
 }
