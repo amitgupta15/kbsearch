@@ -29,7 +29,7 @@ Remove the irrelevant words from the list of tokens
 - Run the separated tokens through jaro winkler algo to find a possible match in the dictionary: ["pay"]
 - If match is found, add that word in the list of tokens
 
-#### 4. Run the tokens through context map
+### 4. Run the tokens through context map
 
 **Input:** ["contact"]
 
