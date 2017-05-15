@@ -1,12 +1,13 @@
 package com.ats.kbsearch.services;
 
+import com.ats.kbsearch.decorators.TokenDecorator;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
+
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
-import java.util.stream.Collectors;
 
 /**
  * Created by amit on 5/12/17.
@@ -16,15 +17,16 @@ import java.util.stream.Collectors;
 public class TokenService {
 
     private static final String REGEX_TO_REMOVE_PUNCTUATIONS = "[\\p{P}\\p{S}]";
-    private static final Set<String> IGNORE_WORDS =  new HashSet<>(Arrays.asList("how","do","my","i"));
 
-    public Set<String> extractTokensFromSearchPhrase(String searchPhrase) {
-        Set<String> tokens = tokenizeString(searchPhrase);
-        tokens = removeIgnoreWords(tokens);
+    public Set<String> extractTokensFromString(String string, List<TokenDecorator> tokenDecoratorList) {
+        Set<String> tokens = tokenizeString(string);
+        for (TokenDecorator tokenDecorator : tokenDecoratorList) {
+            tokens = tokenDecorator.updateTokens(tokens);
+        }
         return tokens;
     }
 
-    Set<String> tokenizeString(String string) {
+    public Set<String> tokenizeString(String string) {
         Set<String> tokens = new HashSet<>();
         StringTokenizer stringTokenizer = new StringTokenizer(string.toLowerCase().replaceAll(REGEX_TO_REMOVE_PUNCTUATIONS,""));
         while(stringTokenizer.hasMoreTokens()) {
@@ -32,11 +34,4 @@ public class TokenService {
         }
         return tokens;
     }
-
-    Set<String> removeIgnoreWords(Set<String> tokens) {
-        Set<String> relevantTokens = tokens.stream().filter(token -> !IGNORE_WORDS.contains(token)).collect(Collectors.toSet());
-        return relevantTokens;
-    }
-
-
 }

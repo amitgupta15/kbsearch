@@ -19,6 +19,20 @@ Remove the irrelevant words from the list of tokens
 
 **Output:** ["pay","bill","online"]
 
-### 3. Search All Topics
+### 3. Run a spell check on tokens
+
+**Input:** ["pey","bill","online"]
+
+**Output:** ["pey","pay","bill","online"]
+
+- Run all the tokens through dictionary and separate out the ones that are not in the dictionary: ["pey"]
+- Run the separated tokens through jaro winkler algo to find a possible match in the dictionary: ["pay"]
+- If match is found, add that word in the list of tokens
+
+### 4. Search All Topics
 Search a list of all topics to locate keywords. If keyword is found, add the topic to search result.
+
+**Input:** "How do I pay my bill online?"
+
+**Output:** ["Can I pay my bill online?" "How can I get help paying my bill?"]
 

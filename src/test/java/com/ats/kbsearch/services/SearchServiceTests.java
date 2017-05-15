@@ -26,7 +26,7 @@ public class SearchServiceTests {
 
     @Test
     public void searchTest() {
-        String input = "How do I pay my bill online?";
+        String input = "How do I pey my bull online?";
         Set<Topic> allTopics = new HashSet<>(Arrays.asList(
                 new Topic("Can I pay my bill online?"),
                 new Topic("How can I get help paying my bill?"),
