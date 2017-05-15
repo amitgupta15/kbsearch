@@ -20,7 +20,7 @@ public class SpellCheckDecorator extends TokenDecorator {
 
     @Override
     public Set<String> updateTokens(Set<String> tokens) {
-        Set<String> dataDictionary = super.getDataDictionary();
+        Set<String> dataDictionary = (Set<String>) super.getDataDictionary();
         Set<String> tokensNotInDictionary = tokens.stream().filter(token -> !dataDictionary.contains(token)).collect(Collectors.toSet());
         Set<String> checkedTokens = new HashSet<>();
 

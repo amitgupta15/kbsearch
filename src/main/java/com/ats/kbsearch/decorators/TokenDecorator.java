@@ -8,15 +8,15 @@ import java.util.Set;
  */
 public abstract class TokenDecorator {
 
-    private Set<String> dataDictionary = new HashSet<>();
+    private Set<?> dataDictionary = new HashSet<>();
 
-    public TokenDecorator(Set<String> dataDictionary) {
+    public TokenDecorator(Set<?> dataDictionary) {
         this.dataDictionary = dataDictionary;
     }
 
     public abstract Set<String> updateTokens(Set<String> tokens);
 
-    public Set<String> getDataDictionary() {
+    public Set<?> getDataDictionary() {
         return dataDictionary;
     }
 }

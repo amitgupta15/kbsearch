@@ -38,4 +38,16 @@ public class DecoratorTests {
         assertThat(tokens).isEqualTo(expectedTokens);
     }
 
+    @Test
+    public void findContextKeywordsTest() {
+        Set<String> input = new HashSet<>(Arrays.asList("contact","socalgas"));
+        Set<String> expectedTokens = new HashSet<>(Arrays.asList("contact","socalgas","mail","phone","address","fax","facebook","twitter"));
+
+        TokenDecorator contextMapDecorator = new ContextMapDecorator(Data.getContextMap());
+
+        Set<String> tokens = contextMapDecorator.updateTokens(input);
+
+        assertThat(tokens).isEqualTo(expectedTokens);
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.ats.kbsearch.services;
 
 import com.ats.kbsearch.data.Data;
+import com.ats.kbsearch.decorators.ContextMapDecorator;
 import com.ats.kbsearch.decorators.RemoveIgnoreWordsDecorator;
 import com.ats.kbsearch.decorators.SpellCheckDecorator;
 import com.ats.kbsearch.decorators.TokenDecorator;
@@ -24,7 +25,8 @@ public class SearchService {
 
         List<TokenDecorator> tokenDecorators = new ArrayList<>(Arrays.asList(
                 new RemoveIgnoreWordsDecorator(Data.getIgnoreWords()),
-                new SpellCheckDecorator(Data.getDictionary())
+                new SpellCheckDecorator(Data.getDictionary()),
+                new ContextMapDecorator(Data.getContextMap())
         ));
         Set<String> tokens = tokenService.extractTokensFromString(searchPhrase, tokenDecorators);
 

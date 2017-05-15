@@ -40,4 +40,23 @@ public class SearchServiceTests {
 
         assertThat(searchResult).isEqualTo(expectedOutput);
     }
+
+    @Test
+    public void searchContextTest() {
+        String input = "What is the address?";
+        Set<Topic> allTopics = new HashSet<>(Arrays.asList(
+                new Topic("Can I pay my bill online?"),
+                new Topic("How can I get help paying my bill?"),
+                new Topic("How can I contact socalgas?")));
+
+        Set<Topic> expectedOutput = new HashSet<>(Arrays.asList(
+                new Topic("How can I contact socalgas?")
+        ));
+
+        Set<Topic> searchResult = searchService.search(input, allTopics);
+
+        assertThat(searchResult).isEqualTo(expectedOutput);
+
+
+    }
 }
