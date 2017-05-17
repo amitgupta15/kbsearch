@@ -12,24 +12,20 @@ import com.ats.kbsearch.decorators.TokenDecorator;
 import com.ats.kbsearch.domains.Topic;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.*;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class SearchServiceTests {
 
-    @Autowired
+
     SearchService searchService;
 
 
     private Data data = new MockData();
+    private TokenService tokenService = new TokenService();
+
     private List<TokenDecorator> tokenDecorators = new ArrayList<>(Arrays.asList(
             new RemoveIgnoreWordsDecorator(data),
             new SpellCheckDecorator(data),
@@ -38,7 +34,7 @@ public class SearchServiceTests {
 
     @Before
     public void setUp() {
-        searchService.setData(data);
+        searchService = new SearchService(tokenService, data);
     }
 
     @Test
@@ -66,5 +62,17 @@ public class SearchServiceTests {
         Set<Topic> searchResult = searchService.search(input, tokenDecorators);
 
         assertThat(searchResult).isEqualTo(expectedOutput);
+    }
+
+    @Test
+    public void complexKeywordSearchTest() {
+        Set<Topic> allTopics = new HashSet<>(Arrays.asList(
+                new Topic("I need help paying my bill")
+        ));
+
+        String searchPhrase = "pay";
+
+        Set<Topic> searchResult = searchService.collectTopics(allTopics, searchPhrase);
+        assertThat(searchResult.size()).isEqualTo(1);
     }
 }

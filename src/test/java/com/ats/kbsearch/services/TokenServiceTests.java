@@ -7,11 +7,6 @@ import com.ats.kbsearch.decorators.SpellCheckDecorator;
 import com.ats.kbsearch.decorators.TokenDecorator;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,17 +19,15 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Created by amit on 5/12/17.
  */
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class TokenServiceTests {
 
-    @Autowired
     TokenService tokenService;
-
-    private Data data;
+    Data data;
 
     @Before
     public void setUp() {
+
+        tokenService = new TokenService();
         data = new MockData();
     }
     @Test
