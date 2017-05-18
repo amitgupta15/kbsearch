@@ -74,7 +74,7 @@ public class SearchServiceTests {
 
         String token = "paying my bill";
 
-        Set<Topic> searchResult = searchService.collectTopicsForToken(allTopics, token);
+        Set<Topic> searchResult = searchService.searchTopicsForToken(allTopics, token);
         assertThat(searchResult).isEqualTo(allTopics);
     }
 
@@ -86,12 +86,19 @@ public class SearchServiceTests {
 
         String token = "paying your bill";
 
-        Set<Topic> searchResult = searchService.collectTopicsForToken(allTopics, token);
+        Set<Topic> searchResult = searchService.searchTopicsForToken(allTopics, token);
         assertThat(searchResult.size()).isEqualTo(0);
     }
 
     @Test
     public void topicKeywordMatchTest() {
+        Set<Topic> allTopics = new HashSet<>(Arrays.asList(
+                new Topic("MyAccount home page", new HashSet<>(Arrays.asList("pay")))
+        ));
 
+        String token = "pay";
+
+        Set<Topic> searchResult = searchService.searchTopicKeywordForToken(allTopics, token);
+        assertThat(searchResult).isEqualTo(allTopics);
     }
 }
