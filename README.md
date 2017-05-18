@@ -39,9 +39,11 @@ Remove the irrelevant words from the list of tokens
 - If match is found, add all the contextual tokens to the list of tokens
 
 ### 5. Search All Topics
-Search a list of all topics to locate keywords. If keyword is found, add the topic to search result.
 
 **Input:** "How do I pay my bill online?"
 
-**Output:** ["Can I pay my bill online?", "How can I get help paying my bill?"]
+**Output:** ["Can I pay my bill online?", "How can I get help paying my bill?"
+, "Account page"{keywords: 'pay'}]
 
+- Match keyword attached to a topic. If a hit is found, add it to search result
+- Match tokens in topic name with searchPhrase tokens. If a hit is found, add the topic to the search result.
