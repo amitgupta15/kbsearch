@@ -1,8 +1,6 @@
 package com.ats.kbsearch.services;
 
 import com.ats.kbsearch.decorators.TokenDecorator;
-import org.springframework.stereotype.Service;
-
 
 import java.util.HashSet;
 import java.util.List;
@@ -13,7 +11,7 @@ import java.util.StringTokenizer;
  * Created by amit on 5/12/17.
  */
 
-@Service
+
 public class TokenService {
 
     private static final String REGEX_TO_REMOVE_PUNCTUATIONS = "[\\p{P}\\p{S}]";

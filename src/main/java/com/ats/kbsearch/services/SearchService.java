@@ -1,9 +1,7 @@
 package com.ats.kbsearch.services;
 
-import com.ats.kbsearch.data.Data;
 import com.ats.kbsearch.decorators.TokenDecorator;
 import com.ats.kbsearch.domains.Topic;
-import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -11,20 +9,17 @@ import java.util.stream.Collectors;
 /**
  * Created by amit on 5/10/17.
  */
-@Service
+
 public class SearchService {
 
     private TokenService tokenService;
-    private Data data;
 
-    public SearchService(TokenService tokenService, Data data) {
+    public SearchService(TokenService tokenService) {
         this.tokenService = tokenService;
-        this.data = data;
     }
 
-    public Set<Topic> search(String searchPhrase, List<TokenDecorator> tokenDecorators) {
+    public Set<Topic> search(String searchPhrase, Set<Topic> allTopics, List<TokenDecorator> tokenDecorators) {
 
-        Set<Topic> allTopics = data.getAllTopics();
         Set<String> tokens = tokenService.extractAndDecorateTokensFromString(searchPhrase, tokenDecorators);
 
         Set<Topic> searchResult = new HashSet<>();

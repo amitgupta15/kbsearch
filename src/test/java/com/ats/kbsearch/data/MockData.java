@@ -19,11 +19,7 @@ public class MockData implements Data {
             new HashSet<>(Arrays.asList("contact","mail","address","fax","facebook","twitter","phone")),
             new HashSet<>(Arrays.asList("assistance","gaf","liheap","low income"))
     ));
-    private static final Set<Topic> ALL_TOPICS = new HashSet<>(Arrays.asList(
-            new Topic("Can I pay my bill online?"),
-            new Topic("How can I get help paying my bill?"),
-            new Topic("How can I contact socalgas?"))
-    );
+
 
     @Override
     public Set<String> getDictionary() {
@@ -38,6 +34,4 @@ public class MockData implements Data {
         return CONTEXT_MAP;
     }
 
-    @Override
-    public Set<Topic> getAllTopics() { return ALL_TOPICS; }
 }

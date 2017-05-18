@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Set;
 
 /**
  * Created by amit on 5/12/17.
@@ -16,25 +17,37 @@ public class Topic {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    private Set<String> keywords;
 
-    public Topic() {}
+    protected Topic() {}
 
     public Topic(String name) {
         this.name = name;
+    }
+
+    public Topic(String name, Set<String> keywords) {
+        this.name = name;
+        this.keywords = keywords;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Set<String> getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(Set<String> keywords) {
+        this.keywords = keywords;
     }
 
     @Override
     public String toString() {
         return "Topic{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", keywords=" + keywords +
                 '}';
     }
 
@@ -45,14 +58,14 @@ public class Topic {
 
         Topic topic = (Topic) o;
 
-        if (id != null ? !id.equals(topic.id) : topic.id != null) return false;
-        return name != null ? name.equals(topic.name) : topic.name == null;
+        if (name != null ? !name.equals(topic.name) : topic.name != null) return false;
+        return keywords != null ? keywords.equals(topic.keywords) : topic.keywords == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (keywords != null ? keywords.hashCode() : 0);
         return result;
     }
 }

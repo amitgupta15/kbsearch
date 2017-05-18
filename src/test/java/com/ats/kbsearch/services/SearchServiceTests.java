@@ -3,12 +3,8 @@ package com.ats.kbsearch.services;
  * Created by amit on 5/10/17.
  */
 
-import com.ats.kbsearch.data.Data;
-import com.ats.kbsearch.data.MockData;
-import com.ats.kbsearch.decorators.ContextMapDecorator;
-import com.ats.kbsearch.decorators.RemoveIgnoreWordsDecorator;
-import com.ats.kbsearch.decorators.SpellCheckDecorator;
-import com.ats.kbsearch.decorators.TokenDecorator;
+import com.ats.kbsearch.data.*;
+import com.ats.kbsearch.decorators.*;
 import com.ats.kbsearch.domains.Topic;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,9 +28,15 @@ public class SearchServiceTests {
             new ContextMapDecorator(data)
     ));
 
+    private static final Set<Topic> ALL_TOPICS = new HashSet<>(Arrays.asList(
+            new Topic("Can I pay my bill online?"),
+            new Topic("How can I get help paying my bill?"),
+            new Topic("How can I contact socalgas?")
+    ));
+
     @Before
     public void setUp() {
-        searchService = new SearchService(tokenService, data);
+        searchService = new SearchService(tokenService);
     }
 
     @Test
@@ -46,7 +48,7 @@ public class SearchServiceTests {
                 new Topic("Can I pay my bill online?"),
                 new Topic("How can I get help paying my bill?")));
 
-        Set<Topic> searchResult = searchService.search(input, tokenDecorators);
+        Set<Topic> searchResult = searchService.search(input, ALL_TOPICS ,tokenDecorators);
 
         assertThat(searchResult).isEqualTo(expectedOutput);
     }
@@ -59,20 +61,37 @@ public class SearchServiceTests {
                 new Topic("How can I contact socalgas?")
         ));
 
-        Set<Topic> searchResult = searchService.search(input, tokenDecorators);
+        Set<Topic> searchResult = searchService.search(input, ALL_TOPICS, tokenDecorators);
 
         assertThat(searchResult).isEqualTo(expectedOutput);
     }
 
     @Test
-    public void complexKeywordSearchTest() {
+    public void complexKeywordMatchTest() {
         Set<Topic> allTopics = new HashSet<>(Arrays.asList(
                 new Topic("I need help paying my bill")
         ));
 
-        String searchPhrase = "pay";
+        String searchPhrase = "paying my bill";
 
         Set<Topic> searchResult = searchService.collectTopics(allTopics, searchPhrase);
-        assertThat(searchResult.size()).isEqualTo(1);
+        assertThat(searchResult).isEqualTo(allTopics);
+    }
+
+    @Test
+    public void complexKeywordNotMatchTest() {
+        Set<Topic> allTopics = new HashSet<>(Arrays.asList(
+                new Topic("I need help paying my bill")
+        ));
+
+        String searchPhrase = "paying your bill";
+
+        Set<Topic> searchResult = searchService.collectTopics(allTopics, searchPhrase);
+        assertThat(searchResult.size()).isEqualTo(0);
+    }
+
+    @Test
+    public void topicKeywordMatchTest() {
+
     }
 }

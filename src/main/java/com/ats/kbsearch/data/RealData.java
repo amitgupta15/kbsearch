@@ -26,8 +26,4 @@ public class RealData implements Data {
         return null;
     }
 
-    @Override
-    public Set<Topic> getAllTopics() {
-        return null;
-    }
 }
