@@ -22,19 +22,25 @@ public class SearchService {
 
         Set<String> tokens = tokenService.extractAndDecorateTokensFromString(searchPhrase, tokenDecorators);
 
+        Set<Topic> topicsWithKeywords = allTopics.stream().filter(topic -> topic.getKeywords().size() > 0).collect(Collectors.toSet());
         Set<Topic> searchResult = new HashSet<>();
         for(String token: tokens) {
+            if(topicsWithKeywords.size() > 0) {
+                searchResult.addAll(searchTopicKeywordForToken(topicsWithKeywords, token));
+            }
             searchResult.addAll(searchTopicsForToken(allTopics, token));
         }
         return searchResult;
     }
 
+
+
     Set<Topic> searchTopicsForToken(Set<Topic> allTopics, String token) {
         return allTopics.stream().filter(topic -> topic.getName().indexOf(token) >= 0).collect(Collectors.toSet());
     }
 
-    Set<Topic> searchTopicKeywordForToken(Set<Topic> allTopics, String token) {
-        return null;
+    Set<Topic> searchTopicKeywordForToken(Set<Topic> topicsWithKeywords, String token) {
+        return topicsWithKeywords.stream().filter(topicWithKeyword -> topicWithKeyword.getKeywords().contains(token)).collect(Collectors.toSet());
     }
 
 }

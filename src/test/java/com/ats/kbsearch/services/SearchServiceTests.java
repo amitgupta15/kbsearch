@@ -19,24 +19,26 @@ public class SearchServiceTests {
     SearchService searchService;
 
 
-    private Data data = new MockData();
-    private TokenService tokenService = new TokenService();
-
-    private List<TokenDecorator> tokenDecorators = new ArrayList<>(Arrays.asList(
-            new RemoveIgnoreWordsDecorator(data),
-            new SpellCheckDecorator(data),
-            new ContextMapDecorator(data)
-    ));
+    private List<TokenDecorator> tokenDecorators;
 
     private static final Set<Topic> ALL_TOPICS = new HashSet<>(Arrays.asList(
             new Topic("Can I pay my bill online?"),
             new Topic("How can I get help paying my bill?"),
-            new Topic("How can I contact socalgas?")
+            new Topic("How can I contact socalgas?"),
+            new Topic("MyAccount home page", new HashSet<>(Arrays.asList("pay")))
     ));
 
     @Before
     public void setUp() {
-        searchService = new SearchService(tokenService);
+        searchService = new SearchService(new TokenService());
+
+        tokenDecorators = new ArrayList<>(Arrays.asList(
+                new RemoveIgnoreWordsDecorator(new MockData()),
+                new SpellCheckDecorator(new MockData()),
+                new ContextMapDecorator(new MockData())
+        ));
+
+
     }
 
     @Test
@@ -46,11 +48,14 @@ public class SearchServiceTests {
 
         Set<Topic> expectedOutput = new HashSet<>(Arrays.asList(
                 new Topic("Can I pay my bill online?"),
-                new Topic("How can I get help paying my bill?")));
+                new Topic("How can I get help paying my bill?"),
+                new Topic("MyAccount home page", new HashSet<>(Arrays.asList("pay")))
+        ));
 
         Set<Topic> searchResult = searchService.search(input, ALL_TOPICS ,tokenDecorators);
 
         assertThat(searchResult).isEqualTo(expectedOutput);
+
     }
 
     @Test
