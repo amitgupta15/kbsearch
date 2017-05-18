@@ -24,12 +24,12 @@ public class SearchService {
 
         Set<Topic> searchResult = new HashSet<>();
         for(String token: tokens) {
-            searchResult.addAll(collectTopics(allTopics, token));
+            searchResult.addAll(collectTopicsForToken(allTopics, token));
         }
         return searchResult;
     }
 
-    Set<Topic> collectTopics(Set<Topic> allTopics, String token) {
+    Set<Topic> collectTopicsForToken(Set<Topic> allTopics, String token) {
         return allTopics.stream().filter(topic -> topic.getName().indexOf(token) >= 0).collect(Collectors.toSet());
     }
 }

@@ -72,9 +72,9 @@ public class SearchServiceTests {
                 new Topic("I need help paying my bill")
         ));
 
-        String searchPhrase = "paying my bill";
+        String token = "paying my bill";
 
-        Set<Topic> searchResult = searchService.collectTopics(allTopics, searchPhrase);
+        Set<Topic> searchResult = searchService.collectTopicsForToken(allTopics, token);
         assertThat(searchResult).isEqualTo(allTopics);
     }
 
@@ -84,9 +84,9 @@ public class SearchServiceTests {
                 new Topic("I need help paying my bill")
         ));
 
-        String searchPhrase = "paying your bill";
+        String token = "paying your bill";
 
-        Set<Topic> searchResult = searchService.collectTopics(allTopics, searchPhrase);
+        Set<Topic> searchResult = searchService.collectTopicsForToken(allTopics, token);
         assertThat(searchResult.size()).isEqualTo(0);
     }
 
