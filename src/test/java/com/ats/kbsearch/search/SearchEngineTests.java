@@ -16,11 +16,13 @@ import java.util.*;
 
 public class SearchEngineTests {
 
+    SearchEngine searchEngine = new SearchEngine(new TokenService());
 
-    SearchEngine searchEngine;
-
-
-    private List<TokenDecorator> tokenDecorators;
+    private List<TokenDecorator> tokenDecorators = new ArrayList<>(Arrays.asList(
+            new RemoveIgnoreWordsDecorator(new MockData()),
+            new SpellCheckDecorator(new MockData()),
+            new ContextMapDecorator(new MockData())
+    ));
 
     private static final Set<Topic> ALL_TOPICS = new HashSet<>(Arrays.asList(
             new Topic("Can I pay my bill online?"),
@@ -28,19 +30,6 @@ public class SearchEngineTests {
             new Topic("How can I contact socalgas?"),
             new Topic("MyAccount home page", new ArrayList<>(Arrays.asList("pay")))
     ));
-
-    @Before
-    public void setUp() {
-        searchEngine = new SearchEngine(new TokenService());
-
-        tokenDecorators = new ArrayList<>(Arrays.asList(
-                new RemoveIgnoreWordsDecorator(new MockData()),
-                new SpellCheckDecorator(new MockData()),
-                new ContextMapDecorator(new MockData())
-        ));
-
-
-    }
 
     @Test
     public void searchTest() {
@@ -53,7 +42,7 @@ public class SearchEngineTests {
                 new Topic("MyAccount home page", new ArrayList<>(Arrays.asList("pay")))
         ));
 
-        Set<Topic> searchResult = searchEngine.search(input, ALL_TOPICS ,tokenDecorators);
+        Set<Topic> searchResult = searchEngine.search(input, ALL_TOPICS, tokenDecorators);
 
         assertThat(searchResult).isEqualTo(expectedOutput);
 
@@ -73,7 +62,7 @@ public class SearchEngineTests {
     }
 
     @Test
-    public void complexKeywordMatchTest() {
+    public void searchTopicsForTokenMatchFoundTest() {
         Set<Topic> allTopics = new HashSet<>(Arrays.asList(
                 new Topic("I need help paying my bill")
         ));
@@ -85,7 +74,7 @@ public class SearchEngineTests {
     }
 
     @Test
-    public void complexKeywordNotMatchTest() {
+    public void searchTopicsForTokenMatchNotFoundFoundTest() {
         Set<Topic> allTopics = new HashSet<>(Arrays.asList(
                 new Topic("I need help paying my bill")
         ));
@@ -97,7 +86,7 @@ public class SearchEngineTests {
     }
 
     @Test
-    public void topicKeywordMatchTest() {
+    public void searchTopicKeywordForTokenTest() {
         Set<Topic> allTopics = new HashSet<>(Arrays.asList(
                 new Topic("MyAccount home page", new ArrayList<>(Arrays.asList("pay")))
         ));
