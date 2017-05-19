@@ -4,31 +4,30 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by amit on 5/12/17.
  */
 
-@Entity
+
 public class Topic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private Set<String> keywords;
+    private List<String> keywords = new ArrayList<String>();
 
     protected Topic() {}
 
     public Topic(String name) {
         this.name = name;
-        this.keywords = new HashSet<>();
     }
 
-    public Topic(String name, Set<String> keywords) {
-        this.name = name;
+    public Topic(String name, List<String> keywords) {
+        this(name);
         this.keywords = keywords;
     }
 
@@ -36,11 +35,11 @@ public class Topic {
         return name;
     }
 
-    public Set<String> getKeywords() {
+    public List<String> getKeywords() {
         return keywords;
     }
 
-    public void setKeywords(Set<String> keywords) {
+    public void setKeywords(List<String> keywords) {
         this.keywords = keywords;
     }
 

@@ -34,4 +34,10 @@ public class MockData implements Data {
         return CONTEXT_MAP;
     }
 
+    @Override
+    public Set<Topic> getAllTopics() {
+        return new HashSet<>(Arrays.asList(
+                new Topic("I need help paying my bill")
+        ));
+    }
 }

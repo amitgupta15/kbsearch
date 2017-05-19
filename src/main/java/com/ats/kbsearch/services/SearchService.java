@@ -1,46 +1,52 @@
 package com.ats.kbsearch.services;
 
+import com.ats.kbsearch.data.Data;
+import com.ats.kbsearch.decorators.ContextMapDecorator;
+import com.ats.kbsearch.decorators.RemoveIgnoreWordsDecorator;
+import com.ats.kbsearch.decorators.SpellCheckDecorator;
 import com.ats.kbsearch.decorators.TokenDecorator;
 import com.ats.kbsearch.domains.Topic;
+import com.ats.kbsearch.search.SearchEngine;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 
 /**
- * Created by amit on 5/10/17.
+ * Created by amit on 5/19/17.
  */
 
+@Service
 public class SearchService {
 
-    private TokenService tokenService;
+    @Autowired
+    private SearchEngine searchEngine;
 
-    public SearchService(TokenService tokenService) {
-        this.tokenService = tokenService;
+    @Autowired
+    private Data data;
+
+
+    public Collection<Topic> search(String searchPhrase) {
+        return searchEngine.search(searchPhrase, data.getAllTopics(), getTokenDecorators());
     }
 
-    public Set<Topic> search(String searchPhrase, Set<Topic> allTopics, List<TokenDecorator> tokenDecorators) {
-
-        Set<String> tokens = tokenService.extractAndDecorateTokensFromString(searchPhrase, tokenDecorators);
-
-        Set<Topic> topicsWithKeywords = allTopics.stream().filter(topic -> topic.getKeywords().size() > 0).collect(Collectors.toSet());
-        Set<Topic> searchResult = new HashSet<>();
-        for(String token: tokens) {
-            if(topicsWithKeywords.size() > 0) {
-                searchResult.addAll(searchTopicKeywordForToken(topicsWithKeywords, token));
-            }
-            searchResult.addAll(searchTopicsForToken(allTopics, token));
-        }
-        return searchResult;
+    private ArrayList<TokenDecorator> getTokenDecorators() {
+        return new ArrayList<>(Arrays.asList(
+                    new RemoveIgnoreWordsDecorator(data),
+                    new SpellCheckDecorator(data),
+                    new ContextMapDecorator(data)
+            ));
     }
 
-
-
-    Set<Topic> searchTopicsForToken(Set<Topic> allTopics, String token) {
-        return allTopics.stream().filter(topic -> topic.getName().indexOf(token) >= 0).collect(Collectors.toSet());
+    public void setData(Data data) {
+        this.data = data;
     }
 
-    Set<Topic> searchTopicKeywordForToken(Set<Topic> topicsWithKeywords, String token) {
-        return topicsWithKeywords.stream().filter(topicWithKeyword -> topicWithKeyword.getKeywords().contains(token)).collect(Collectors.toSet());
+    public void setSearchEngine(SearchEngine searchEngine) {
+        this.searchEngine = searchEngine;
     }
+
 
 }

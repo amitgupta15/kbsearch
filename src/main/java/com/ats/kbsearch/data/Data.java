@@ -12,4 +12,5 @@ public interface Data {
     Set<String> getDictionary();
     Set<String> getIgnoreWords();
     Set<Set> getContextMap();
+    Set<Topic> getAllTopics();
 }
