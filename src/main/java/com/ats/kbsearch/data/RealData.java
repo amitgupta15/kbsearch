@@ -14,7 +14,7 @@ import java.util.Set;
 @Service
 public class RealData implements Data {
     private static final Set<String> DICTIONARY = new HashSet<>(Arrays.asList("pay","bill","online"));
-    private static final Set<String> IGNORE_WORDS =  new HashSet<>(Arrays.asList("how","do","my","i"));
+    private static final Set<String> IGNORE_WORDS =  new HashSet<>(Arrays.asList("how","do","my","i","can","socalgas","get","information","on"));
     private static final Set<Set> CONTEXT_MAP = new HashSet<>(Arrays.asList(
             new HashSet<>(Arrays.asList("contact","mail","address","fax","facebook","twitter","phone")),
             new HashSet<>(Arrays.asList("assistance","gaf","liheap","low income"))
@@ -37,7 +37,8 @@ public class RealData implements Data {
     @Override
     public Set<Topic> getAllTopics() {
         return new HashSet<>(Arrays.asList(
-                new Topic("I need help paying my bill")
+                new Topic("I need help paying my bill"),
+                new Topic("How do I pay my bill online?")
         ));
     }
 }
