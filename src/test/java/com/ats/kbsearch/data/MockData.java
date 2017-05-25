@@ -3,9 +3,7 @@ package com.ats.kbsearch.data;
 import com.ats.kbsearch.domains.Topic;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by amit on 5/15/17.
@@ -35,8 +33,8 @@ public class MockData implements Data {
     }
 
     @Override
-    public Set<Topic> getAllTopics() {
-        return new HashSet<>(Arrays.asList(
+    public List<Topic> getAllTopics() {
+        return new ArrayList<>(Arrays.asList(
                 new Topic("I need help paying my bill")
         ));
     }

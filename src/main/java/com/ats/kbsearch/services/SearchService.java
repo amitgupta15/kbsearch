@@ -21,12 +21,16 @@ import java.util.Collection;
 @Service
 public class SearchService {
 
-    @Autowired
+    //@Autowired
     private SearchEngine searchEngine;
 
-    @Autowired
+    //@Autowired
     private Data data;
 
+    public SearchService(SearchEngine searchEngine, Data data) {
+        this.searchEngine = searchEngine;
+        this.data = data;
+    }
 
     public Collection<Topic> search(String searchPhrase) {
         return searchEngine.search(searchPhrase, data.getAllTopics(), getTokenDecorators());
@@ -40,13 +44,13 @@ public class SearchService {
             ));
     }
 
-    public void setData(Data data) {
-        this.data = data;
-    }
-
-    public void setSearchEngine(SearchEngine searchEngine) {
-        this.searchEngine = searchEngine;
-    }
+//    public void setData(Data data) {
+//        this.data = data;
+//    }
+//
+//    public void setSearchEngine(SearchEngine searchEngine) {
+//        this.searchEngine = searchEngine;
+//    }
 
 
 }

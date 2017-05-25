@@ -17,9 +17,7 @@ public class SearchServiceTests {
 
     @Before
     public void setUp() {
-        searchService = new SearchService();
-        searchService.setData(new MockData());
-        searchService.setSearchEngine(new SearchEngine(new TokenService()));
+        searchService = new SearchService(new SearchEngine(new TokenService()), new MockData());
     }
 
     @Test

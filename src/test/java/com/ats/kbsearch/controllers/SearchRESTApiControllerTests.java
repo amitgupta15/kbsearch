@@ -1,8 +1,11 @@
 package com.ats.kbsearch.controllers;
 
+import com.ats.kbsearch.data.MockData;
+import com.ats.kbsearch.repositories.TopicRepository;
 import com.ats.kbsearch.services.SearchService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -30,15 +33,16 @@ public class SearchRESTApiControllerTests {
     @MockBean
     SearchService searchService;
 
+    @MockBean
+    TopicRepository topicRepository;
+
     @Test
     public void searchRESTTest() throws Exception {
-
         String searchPhrase = "How do I pay my bill";
         mockMvc.perform(get("/api/search/" + searchPhrase))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
         verify(searchService, times(1)).search(searchPhrase);
-
     }
 
 }

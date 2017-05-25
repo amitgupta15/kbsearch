@@ -16,15 +16,14 @@ import java.util.*;
 
 public class SearchEngineTests {
 
-    SearchEngine searchEngine = new SearchEngine(new TokenService());
-
+    private SearchEngine searchEngine = new SearchEngine(new TokenService());
     private List<TokenDecorator> tokenDecorators = new ArrayList<>(Arrays.asList(
             new RemoveIgnoreWordsDecorator(new MockData()),
             new SpellCheckDecorator(new MockData()),
             new ContextMapDecorator(new MockData())
     ));
 
-    private static final Set<Topic> ALL_TOPICS = new HashSet<>(Arrays.asList(
+    private static final List<Topic> ALL_TOPICS = new ArrayList<>(Arrays.asList(
             new Topic("Can I pay my bill online?"),
             new Topic("How can I get help paying my bill?"),
             new Topic("How can I contact socalgas?"),
@@ -63,37 +62,37 @@ public class SearchEngineTests {
 
     @Test
     public void searchTopicsForTokenMatchFoundTest() {
-        Set<Topic> allTopics = new HashSet<>(Arrays.asList(
+        List<Topic> allTopics = new ArrayList<>(Arrays.asList(
                 new Topic("I need help paying my bill")
         ));
 
         String token = "paying my bill";
 
-        Set<Topic> searchResult = searchEngine.searchTopicsForToken(allTopics, token);
+        List<Topic> searchResult = searchEngine.searchTopicsForToken(allTopics, token);
         assertThat(searchResult).isEqualTo(allTopics);
     }
 
     @Test
     public void searchTopicsForTokenMatchNotFoundFoundTest() {
-        Set<Topic> allTopics = new HashSet<>(Arrays.asList(
+        List<Topic> allTopics = new ArrayList<>(Arrays.asList(
                 new Topic("I need help paying my bill")
         ));
 
         String token = "paying your bill";
 
-        Set<Topic> searchResult = searchEngine.searchTopicsForToken(allTopics, token);
+        List<Topic> searchResult = searchEngine.searchTopicsForToken(allTopics, token);
         assertThat(searchResult.size()).isEqualTo(0);
     }
 
     @Test
     public void searchTopicKeywordForTokenTest() {
-        Set<Topic> allTopics = new HashSet<>(Arrays.asList(
+        List<Topic> allTopics = new ArrayList<>(Arrays.asList(
                 new Topic("MyAccount home page", new ArrayList<>(Arrays.asList("pay")))
         ));
 
         String token = "pay";
 
-        Set<Topic> searchResult = searchEngine.searchTopicKeywordForToken(allTopics, token);
+        List<Topic> searchResult = searchEngine.searchTopicKeywordForToken(allTopics, token);
         assertThat(searchResult).isEqualTo(allTopics);
     }
 }

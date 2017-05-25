@@ -1,9 +1,8 @@
-package com.ats.kbsearch.fixtures;
+package com.ats.kbsearch.acceptancetests.fixtures;
 
 import com.ats.kbsearch.data.RealData;
 import com.ats.kbsearch.decorators.SpellCheckDecorator;
 import com.ats.kbsearch.services.TokenService;
-import org.apache.commons.lang3.StringUtils.*;
 
 import java.util.Arrays;
 import java.util.Set;

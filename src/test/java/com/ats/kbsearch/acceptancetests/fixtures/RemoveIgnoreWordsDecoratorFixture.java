@@ -1,4 +1,4 @@
-package com.ats.kbsearch.fixtures;
+package com.ats.kbsearch.acceptancetests.fixtures;
 
 import com.ats.kbsearch.data.RealData;
 import com.ats.kbsearch.decorators.RemoveIgnoreWordsDecorator;

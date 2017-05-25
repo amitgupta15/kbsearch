@@ -2,6 +2,7 @@ package com.ats.kbsearch.data;
 
 import com.ats.kbsearch.domains.Topic;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -12,5 +13,5 @@ public interface Data {
     Set<String> getDictionary();
     Set<String> getIgnoreWords();
     Set<Set> getContextMap();
-    Set<Topic> getAllTopics();
+    List<Topic> getAllTopics();
 }
