@@ -17,7 +17,10 @@ public class Topic {
     private String name;
 
     @ElementCollection
-    private List<String> keywords = new ArrayList<String>();
+    private List<String> keywords = new ArrayList<>();
+
+    @Transient
+    private List<String> matchedTokens = new ArrayList<>();
 
     protected Topic() {}
 
@@ -40,6 +43,14 @@ public class Topic {
 
     public void setKeywords(List<String> keywords) {
         this.keywords = keywords;
+    }
+
+    public List<String> getMatchedTokens() {
+        return matchedTokens;
+    }
+
+    public void setMatchedTokens(List<String> matchedTokens) {
+        this.matchedTokens = matchedTokens;
     }
 
     @Override

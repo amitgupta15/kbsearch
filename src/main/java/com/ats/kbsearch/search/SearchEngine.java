@@ -39,11 +39,26 @@ public class SearchEngine {
     }
 
     List<Topic> searchTopicsForToken(List<Topic> allTopics, String token) {
-        return allTopics.stream().filter(topic -> topic.getName().indexOf(token) >= 0).collect(Collectors.toList());
+        List<Topic> result = new ArrayList<>();
+        for(Topic topic: allTopics) {
+            if(topic.getName().contains(token)) {
+                result.add(topic);
+                topic.getMatchedTokens().add(token);
+            }
+        }
+        return result;
+                //allTopics.stream().filter(topic -> topic.getName().contains(token)).collect(Collectors.toList());
     }
 
     List<Topic> searchTopicKeywordForToken(List<Topic> topicsWithKeywords, String token) {
-        return topicsWithKeywords.stream().filter(topicWithKeyword -> topicWithKeyword.getKeywords().contains(token)).collect(Collectors.toList());
+        List<Topic> result = new ArrayList<>();
+        for(Topic topic: topicsWithKeywords) {
+            if(topic.getKeywords().contains(token)) {
+                result.add(topic);
+                topic.getMatchedTokens().add(token);
+            }
+        }
+        return result;
+        //return topicsWithKeywords.stream().filter(topicWithKeyword -> topicWithKeyword.getKeywords().contains(token)).collect(Collectors.toList());
     }
-
 }
